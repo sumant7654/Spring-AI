@@ -19,7 +19,7 @@ public class ChatClientConfig {
                 .maxTokens(500);
         return chatClientBuilder
                 .defaultOptions(chatOptions)
-                .defaultAdvisors(List.of(SimpleLoggerAdvisor.builder().build(), new TokenUsageAuditAdvisor()))
+                //.defaultAdvisors(List.of(SimpleLoggerAdvisor.builder().build(), new TokenUsageAuditAdvisor()))
                 .defaultSystem("""
                         # ROLE & PURPOSE
                                     You are a professional IT Support Agent for Digi Bank. Your sole function is to educate and guide customers on keeping their accounts secure from cyber fraud and online scams.
