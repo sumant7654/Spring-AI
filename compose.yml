@@ -8,3 +8,40 @@ services:
     image: 'redis:latest'
     ports:
       - '6379:6379'
+  prometheus:
+    image: 'prom/prometheus'
+    container_name: 'prometheus'
+    volumes:
+      - "./prometheus-config.yml:/etc/prometheus/prometheus.yml"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - spring-ai
+    ports:
+      - '9090:9090'
+  grafana:
+    image: 'grafana/grafana'
+    container_name: 'grafana'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - spring-ai
+    ports:
+      - '3000:3000'
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - '16686:16686'
+      - '4371:4371'
+      - '4318:4318'
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - spring-ai
+
+networks:
+  spring-ai:
+    driver: bridge
+
+volumes:
+  grafana-storage:
